@@ -11,7 +11,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
+	// "strings"
 	"time"
 )
 
@@ -42,7 +42,7 @@ func main() {
 		var imageUrls = make([]string, len(x))
 		for index, item := range x {
 			var url = item.(map[string]interface{})["url"].(string)
-			url = strings.Replace(url, "1920x1080", "1366x768", 1)
+			// url = strings.Replace(url, "1920x1080", "1366x768", 1)
 			imageUrls[index] = "http://cn.bing.com" + url
 		}
 
