@@ -4,14 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"flag"
+	"github.com/godfather1103/utils"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"strconv"
-	"github.com/godfather1103/utils"
-	"time"
 )
 
 func main() {
@@ -19,9 +17,8 @@ func main() {
 	var rootPath string
 	flag.StringVar(&rootPath, "prefix", ".", "下载的根路径")
 	flag.Parse()
-	date := time.Now().Format(utils.TransverseDate)
 	who, _ := os.Hostname()
-	var realPathPrefix = rootPath + "/" + who + "/Wallpaper/" + date
+	var realPathPrefix = rootPath + "/" + who + "/Wallpaper/"
 	log.Println("下载路径为：" + realPathPrefix)
 	exists, _ := utils.PathExists(realPathPrefix)
 	if !exists {
@@ -40,14 +37,16 @@ func main() {
 		json.Unmarshal(buf.Bytes(), &imagesJson)
 		var x = imagesJson["images"].([]interface{})
 		var imageUrls = make([]string, len(x))
+		var endTimes = make([]string, len(x))
 		for index, item := range x {
 			var url = item.(map[string]interface{})["url"].(string)
 			// url = strings.Replace(url, "1920x1080", "1366x768", 1)
-			imageUrls[index] = "http://cn.bing.com" + url
+			imageUrls[index] = "https://cn.bing.com" + url
+			endTimes[index] = item.(map[string]interface{})["enddate"].(string)
 		}
 
 		for index, item := range imageUrls {
-			fileName := realPathPrefix + "/" + date + "-" + strconv.Itoa(index) + ".jpg"
+			fileName := realPathPrefix + "/" + endTimes[index] + ".jpg"
 			exists, _ = utils.PathExists(fileName)
 			if exists {
 				f, _ = os.OpenFile(fileName, os.O_RDWR, 0666)
