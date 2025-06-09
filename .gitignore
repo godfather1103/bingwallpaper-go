@@ -135,3 +135,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# 排除生成的文件
+bingwallpaper-go*
+*.jpg
+

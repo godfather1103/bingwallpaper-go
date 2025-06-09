@@ -4,14 +4,13 @@ import (
 	"bytes"
 	"encoding/json"
 	"flag"
-	"github.com/godfather1103/utils"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
-	// "strings"
+	"github.com/godfather1103/utils"
 	"time"
 )
 
@@ -23,6 +22,7 @@ func main() {
 	date := time.Now().Format(utils.TransverseDate)
 	who, _ := os.Hostname()
 	var realPathPrefix = rootPath + "/" + who + "/Wallpaper/" + date
+	log.Println("下载路径为：" + realPathPrefix)
 	exists, _ := utils.PathExists(realPathPrefix)
 	if !exists {
 		utils.PathMkdir(realPathPrefix)
